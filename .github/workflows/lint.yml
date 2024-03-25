@@ -1,0 +1,22 @@
+name: Lint
+
+on:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly-2024-03-01
+          override: true
+          components: clippy
+
+      - run: wget https://github.com/tombailey/clippy-ghaa/releases/download/0.1.0/clippy-ghaa_x86_64-unknown-linux-gnu
+      - run: chmod +x ./clippy-ghaa_x86_64-unknown-linux-gnu
+      - run: cargo clippy > ./clippy-ghaa_x86_64-unknown-linux-gnu

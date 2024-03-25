@@ -69,3 +69,5 @@ fn print_annotation_clippy_finding(summary: &ClippySummary, reference: &ClippyRe
         summary.message
     );
 }
+
+struct Unused {}
