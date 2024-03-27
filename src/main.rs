@@ -3,9 +3,7 @@ use std::io::stdin;
 
 fn main() {
     let mut line_buffer = String::new();
-    let mut bytes_read = stdin()
-        .read_line(&mut line_buffer)
-        .expect("Error reading stdin");
+    let mut bytes_read = read_stdin_line_or_panic(&mut line_buffer);
 
     let mut maybe_summary: Option<ClippySummary> = None;
     while bytes_read > 0 {
@@ -20,10 +18,12 @@ fn main() {
             maybe_summary = maybe_parse_clippy_summary(&line_buffer);
         }
         line_buffer.clear();
-        bytes_read = stdin()
-            .read_line(&mut line_buffer)
-            .expect("Error reading stdin");
+        bytes_read = read_stdin_line_or_panic(&mut line_buffer)
     }
+}
+
+fn read_stdin_line_or_panic(line_buffer: &mut String) -> usize {
+    stdin().read_line(line_buffer).expect("Error reading stdin")
 }
 
 #[derive(Debug)]
